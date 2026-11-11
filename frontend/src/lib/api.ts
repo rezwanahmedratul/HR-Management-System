@@ -27,11 +27,12 @@ export const getBaseUrl = (): string => {
   if (typeof window === 'undefined') {
     return (
       process.env.API_URL_INTERNAL ||
+      process.env.BACKEND_URL ||
       process.env.NEXT_PUBLIC_API_URL ||
       'http://backend:4000/api'
     );
   }
-  return process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api';
+  return process.env.NEXT_PUBLIC_API_URL || '/api-proxy';
 };
 
 const fetchJson = async <T>(endpoint: string, options?: RequestInit): Promise<T> => {

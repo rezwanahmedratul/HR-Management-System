@@ -1,0 +1,30 @@
+# Render Blueprint Configuration
+# Docs: https://render.com/docs/blueprint-spec
+
+services:
+  # Option 1: Unified All-in-One Web Service (Recommended for Free Tier)
+  - type: web
+    name: hr-management-system
+    runtime: docker
+    plan: free
+    region: oregon
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /api-proxy/health
+    envVars:
+      - key: PORT
+        value: "10000"
+      - key: BACKEND_PORT
+        value: "4000"
+      - key: DB_HOST
+        sync: false
+      - key: DB_PORT
+        value: "3306"
+      - key: DB_NAME
+        value: "hr_db"
+      - key: DB_USER
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      - key: DB_SSL
+        value: "true"

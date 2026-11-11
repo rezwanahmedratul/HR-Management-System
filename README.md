@@ -147,3 +147,36 @@ NestJS relies on TypeScript's `emitDecoratorMetadata`, which Bun's native transp
 ### Report
 - `GET /api/report` - Paginated, filtered, sortable HR report (LEFT JOINs)
 - `GET /api/report/export` - Filtered report CSV download
+
+## Deploying on Render
+
+You can deploy the HR Management System on Render using either the **1-Click Unified Container** (simplest, single free web service) or as **Separate Microservices** via Render Blueprints.
+
+### Option A: 1-Click Unified Web Service (Recommended for Render Free Tier)
+
+Runs both Next.js and NestJS in a single Web Service with internal proxy routing.
+
+1. Create a free MySQL database on a cloud provider (e.g. [Aiven](https://aiven.io), [TiDB Cloud](https://tidbcloud.com), or [Railway](https://railway.app)).
+2. In the MySQL database, run `db/init/01-schema.sql` and `db/init/02-seed.sql` (and optionally `db/demo/03-demo-data.sql`).
+3. In Render Dashboard: Click **New +** -> **Web Service**.
+4. Connect your GitHub repository (`rezwanahmedratul/HR-Management-System`).
+5. Configure:
+   - **Runtime:** `Docker`
+   - **Dockerfile Path:** `./Dockerfile` (or leave default `Dockerfile`)
+   - **Docker Context:** `.` (default)
+6. Under **Environment Variables**, add:
+   - `DB_HOST`: Your remote MySQL host
+   - `DB_PORT`: `3306` (or provider's port)
+   - `DB_NAME`: Your database name
+   - `DB_USER`: Your database username
+   - `DB_PASSWORD`: Your database password
+   - `DB_SSL`: `true` (if using cloud MySQL like Aiven/TiDB)
+7. Click **Deploy Web Service**. Render will build and launch the application!
+
+### Option B: Render Blueprint (`render.yaml`)
+
+1. In Render Dashboard, click **Blueprints** -> **New Blueprint Instance**.
+2. Select your repository.
+3. Render reads `render.yaml` automatically and configures the service and health checks.
+4. Fill in the requested database credentials in the environment prompt and click **Apply**.
+

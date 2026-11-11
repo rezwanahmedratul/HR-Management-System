@@ -9,31 +9,19 @@ import {
   HeadcountByDepartment,
   PayrollByDepartment,
   SalaryDistribution,
-  SalaryRangeByDepartment,
-  TopEarner,
-  SalaryVsBonus,
-  BonusRatio,
   DailyTrend,
-  AttendanceByDepartment,
   AttendanceByEmployee,
   AttendanceByWeekday,
-  AttendanceHeatmapItem,
   DepartmentScorecard,
 } from '@/types';
 import { ChartCard } from '@/components/charts/chart-card';
 import { HeadcountPie } from '@/components/charts/headcount-pie';
 import { DepartmentScorecardRadar } from '@/components/charts/department-scorecard-radar';
 import { SalaryDistributionHistogram } from '@/components/charts/salary-distribution-histogram';
-import { BasicVsBonusBar } from '@/components/charts/basic-vs-bonus-bar';
-import { TopEarnersBar } from '@/components/charts/top-earners-bar';
 import { AverageSalaryByDeptBar } from '@/components/charts/average-salary-by-dept-bar';
-import { SalaryRangeBar } from '@/components/charts/salary-range-bar';
-import { BonusRatioBar } from '@/components/charts/bonus-ratio-bar';
 import { AttendanceRateLine } from '@/components/charts/attendance-rate-line';
 import { WeekdayAttendanceBar } from '@/components/charts/weekday-attendance-bar';
-import { DepartmentRadialBar } from '@/components/charts/department-radial-bar';
 import { EmployeeStatusStackedBar } from '@/components/charts/employee-status-stacked-bar';
-import { HeatmapChart } from '@/components/charts/custom-svg/heatmap-chart';
 import { Select } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -55,17 +43,11 @@ export default function AnalyticsPage() {
   // Compensation data
   const [payroll, setPayroll] = React.useState<PayrollByDepartment[]>([]);
   const [salaryDist, setSalaryDist] = React.useState<SalaryDistribution[]>([]);
-  const [salaryRange, setSalaryRange] = React.useState<SalaryRangeByDepartment[]>([]);
-  const [topEarners, setTopEarners] = React.useState<TopEarner[]>([]);
-  const [salaryVsBonus, setSalaryVsBonus] = React.useState<SalaryVsBonus[]>([]);
-  const [bonusRatio, setBonusRatio] = React.useState<BonusRatio[]>([]);
 
   // Attendance data
   const [dailyTrend, setDailyTrend] = React.useState<DailyTrend[]>([]);
-  const [attByDept, setAttByDept] = React.useState<AttendanceByDepartment[]>([]);
   const [attByEmp, setAttByEmp] = React.useState<AttendanceByEmployee[]>([]);
   const [attByWeekday, setAttByWeekday] = React.useState<AttendanceByWeekday[]>([]);
-  const [heatmap, setHeatmap] = React.useState<AttendanceHeatmapItem[]>([]);
 
   // Load departments once
   React.useEffect(() => {
@@ -82,44 +64,26 @@ export default function AnalyticsPage() {
           scoreRes,
           payRes,
           distRes,
-          rangeRes,
-          earnersRes,
-          svbRes,
-          bonusRes,
           trendRes,
-          deptAttRes,
           empAttRes,
           weekdayRes,
-          heatRes,
         ] = await Promise.all([
           api.analytics.getHeadcountByDepartment(filters),
           api.analytics.getDepartmentScorecard(filters),
           api.analytics.getPayrollByDepartment(filters),
           api.analytics.getSalaryDistribution(filters),
-          api.analytics.getSalaryRangeByDepartment(filters),
-          api.analytics.getTopEarners(10, filters),
-          api.analytics.getSalaryVsBonus(filters),
-          api.analytics.getBonusRatio(filters),
           api.analytics.getDailyTrend(filters),
-          api.analytics.getByDepartment(filters),
           api.analytics.getByEmployee(filters),
           api.analytics.getByWeekday(filters),
-          api.analytics.getHeatmap(filters),
         ]);
 
         setHeadcount(headRes);
         setScorecard(scoreRes);
         setPayroll(payRes);
         setSalaryDist(distRes);
-        setSalaryRange(rangeRes);
-        setTopEarners(earnersRes);
-        setSalaryVsBonus(svbRes);
-        setBonusRatio(bonusRes);
         setDailyTrend(trendRes);
-        setAttByDept(deptAttRes);
         setAttByEmp(empAttRes);
         setAttByWeekday(weekdayRes);
-        setHeatmap(heatRes);
       } catch (err) {
         console.error('Failed to load analytics data:', err);
       } finally {
@@ -229,7 +193,7 @@ export default function AnalyticsPage() {
         <h2 className="text-sm font-semibold tracking-wider text-[var(--muted-foreground)] uppercase">
           Compensation
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <ChartCard
             title="Salary Distribution"
             loading={loading}
@@ -240,48 +204,12 @@ export default function AnalyticsPage() {
           </ChartCard>
 
           <ChartCard
-            title="Basic vs Bonus"
-            loading={loading}
-            data={salaryVsBonus}
-            ariaLabel="Basic vs bonus grouped bar chart"
-          >
-            <BasicVsBonusBar data={salaryVsBonus} />
-          </ChartCard>
-
-          <ChartCard
-            title="Top 10 Earners"
-            loading={loading}
-            data={topEarners}
-            ariaLabel="Top 10 earners bar chart"
-          >
-            <TopEarnersBar data={topEarners} />
-          </ChartCard>
-
-          <ChartCard
             title="Average Salary"
             loading={loading}
             data={payroll}
             ariaLabel="Average salary by department bar chart"
           >
             <AverageSalaryByDeptBar data={payroll} />
-          </ChartCard>
-
-          <ChartCard
-            title="Salary Range"
-            loading={loading}
-            data={salaryRange}
-            ariaLabel="Salary range min avg max by department"
-          >
-            <SalaryRangeBar data={salaryRange} />
-          </ChartCard>
-
-          <ChartCard
-            title="Bonus Ratio"
-            loading={loading}
-            data={bonusRatio}
-            ariaLabel="Bonus ratio percentage bar chart"
-          >
-            <BonusRatioBar data={bonusRatio} />
           </ChartCard>
         </div>
       </section>
@@ -311,32 +239,13 @@ export default function AnalyticsPage() {
           </ChartCard>
 
           <ChartCard
-            title="Department Attendance"
-            loading={loading}
-            data={attByDept}
-            ariaLabel="Attendance rate by department radial bar"
-          >
-            <DepartmentRadialBar data={attByDept} />
-          </ChartCard>
-
-          <ChartCard
             title="Employee Status"
             loading={loading}
             data={attByEmp}
             ariaLabel="Attendance status per employee stacked bar"
-            className="md:col-span-2 lg:col-span-3"
+            className="md:col-span-2 lg:col-span-1"
           >
             <EmployeeStatusStackedBar data={attByEmp} />
-          </ChartCard>
-
-          <ChartCard
-            title="Attendance Heatmap"
-            loading={loading}
-            data={heatmap}
-            ariaLabel="Employee by date attendance heatmap"
-            className="md:col-span-2 lg:col-span-3"
-          >
-            <HeatmapChart data={heatmap} />
           </ChartCard>
         </div>
       </section>

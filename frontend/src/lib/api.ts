@@ -32,7 +32,20 @@ export const getBaseUrl = (): string => {
       'http://backend:4000/api'
     );
   }
-  return process.env.NEXT_PUBLIC_API_URL || '/api-proxy';
+  // If explicitly configured
+  if (process.env.NEXT_PUBLIC_API_URL) {
+    return process.env.NEXT_PUBLIC_API_URL;
+  }
+  // In local development or Docker compose on localhost, hit backend port 4000 directly
+  if (
+    typeof window !== 'undefined' &&
+    (window.location.hostname === 'localhost' ||
+      window.location.hostname === '127.0.0.1')
+  ) {
+    return 'http://localhost:4000/api';
+  }
+  // Cloud deployment runtime proxy
+  return '/api-proxy';
 };
 
 const fetchJson = async <T>(endpoint: string, options?: RequestInit): Promise<T> => {

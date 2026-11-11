@@ -27,13 +27,14 @@ services:
     container_name: hr_backend
     restart: unless-stopped
     environment:
-      DB_HOST: db
-      DB_PORT: 3306
+      DB_HOST: ${DB_HOST:-db}
+      DB_PORT: ${DB_PORT:-3306}
       DB_NAME: ${DB_NAME:-hr_db}
       DB_USER: ${DB_USER:-hr_user}
       DB_PASSWORD: ${DB_PASSWORD:-hr_password}
+      DB_SSL: ${DB_SSL:-false}
       PORT: 4000
-      CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost:3000}
+      CORS_ORIGIN: ${CORS_ORIGIN:-*}
     ports:
       - "4000:4000"
     depends_on:

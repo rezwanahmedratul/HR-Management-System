@@ -156,12 +156,12 @@ export default function AnalyticsPage() {
         </Button>
       </div>
 
-      {/* SECTION 1: WORKFORCE */}
+      {/* SECTION 1: WORKFORCE & COMPENSATION */}
       <section className="space-y-3">
         <h2 className="text-sm font-semibold tracking-wider text-[var(--muted-foreground)] uppercase">
-          Workforce
+          Workforce & Compensation
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           <ChartCard
             title="Headcount Share"
             loading={loading}
@@ -169,23 +169,6 @@ export default function AnalyticsPage() {
             ariaLabel="Headcount share by department pie chart"
           >
             <HeadcountPie data={headcount} />
-          </ChartCard>
-        </div>
-      </section>
-
-      {/* SECTION 2: COMPENSATION */}
-      <section className="space-y-3">
-        <h2 className="text-sm font-semibold tracking-wider text-[var(--muted-foreground)] uppercase">
-          Compensation
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <ChartCard
-            title="Salary Distribution"
-            loading={loading}
-            data={salaryDist}
-            ariaLabel="Salary distribution histogram"
-          >
-            <SalaryDistributionHistogram data={salaryDist} />
           </ChartCard>
 
           <ChartCard
@@ -196,10 +179,20 @@ export default function AnalyticsPage() {
           >
             <AverageSalaryByDeptBar data={payroll} />
           </ChartCard>
+
+          <ChartCard
+            title="Salary Distribution"
+            loading={loading}
+            data={salaryDist}
+            ariaLabel="Salary distribution histogram"
+            className="md:col-span-2 lg:col-span-1"
+          >
+            <SalaryDistributionHistogram data={salaryDist} />
+          </ChartCard>
         </div>
       </section>
 
-      {/* SECTION 3: ATTENDANCE */}
+      {/* SECTION 2: ATTENDANCE */}
       <section className="space-y-3">
         <h2 className="text-sm font-semibold tracking-wider text-[var(--muted-foreground)] uppercase">
           Attendance

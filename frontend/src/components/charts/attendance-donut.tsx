@@ -10,17 +10,11 @@ import {
   Legend,
 } from 'recharts';
 import { StatusDistribution } from '@/types';
-import { PATTERN_IDS } from './chart-theme';
 
 export function AttendanceDonut({ data }: { data: StatusDistribution[] }) {
   if (!data || data.length === 0) return null;
 
-  const patterns = [
-    `url(#${PATTERN_IDS.diagonalHatch})`,
-    `url(#${PATTERN_IDS.dots})`,
-    `url(#${PATTERN_IDS.horizontalStripes})`,
-  ];
-  const strokes = ['var(--chart-1)', 'var(--chart-3)', 'var(--chart-5)'];
+  const shades = ['var(--chart-1)', 'var(--chart-4)', 'var(--chart-6)'];
 
   return (
     <ResponsiveContainer width="100%" height={260}>
@@ -34,15 +28,14 @@ export function AttendanceDonut({ data }: { data: StatusDistribution[] }) {
           innerRadius={60}
           outerRadius={85}
           paddingAngle={3}
-          stroke="var(--border)"
-          strokeWidth={1}
+          stroke="var(--card)"
+          strokeWidth={2}
           animationDuration={800}
         >
           {data.map((_, index) => (
             <Cell
               key={`cell-${index}`}
-              fill={patterns[index % patterns.length]}
-              stroke={strokes[index % strokes.length]}
+              fill={shades[index % shades.length]}
             />
           ))}
         </Pie>
@@ -59,7 +52,7 @@ export function AttendanceDonut({ data }: { data: StatusDistribution[] }) {
         <Legend
           verticalAlign="bottom"
           height={36}
-          iconType="rect"
+          iconType="circle"
           formatter={(val: string) => (
             <span style={{ color: 'var(--foreground)', fontSize: '11px' }}>
               {val}

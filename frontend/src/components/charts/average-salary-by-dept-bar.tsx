@@ -11,7 +11,6 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import { PayrollByDepartment } from '@/types';
-import { PATTERN_IDS } from './chart-theme';
 import { formatCurrency } from '@/lib/utils';
 
 export function AverageSalaryByDeptBar({
@@ -55,9 +54,7 @@ export function AverageSalaryByDeptBar({
         />
         <Bar
           dataKey="averageSalary"
-          fill={`url(#${PATTERN_IDS.verticalStripes})`}
-          stroke="var(--chart-1)"
-          strokeWidth={1}
+          fill="var(--chart-2)"
           radius={[4, 4, 0, 0]}
           animationDuration={800}
         />

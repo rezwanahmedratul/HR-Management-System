@@ -3,22 +3,15 @@
 import * as React from 'react';
 import { Treemap, ResponsiveContainer, Tooltip } from 'recharts';
 import { PayrollByDepartment } from '@/types';
-import { PATTERN_IDS } from './chart-theme';
+import { CHART_COLORS } from './chart-theme';
 import { formatCurrency } from '@/lib/utils';
-
-const patterns = [
-  `url(#${PATTERN_IDS.horizontalStripes})`,
-  `url(#${PATTERN_IDS.crossHatch})`,
-  `url(#${PATTERN_IDS.diagonalHatch})`,
-  `url(#${PATTERN_IDS.dots})`,
-  `url(#${PATTERN_IDS.verticalStripes})`,
-  `url(#${PATTERN_IDS.denseDots})`,
-];
 
 function CustomizedPayrollTreemapContent(props: any) {
   const { x, y, width, height, index, departmentName, totalPayroll } = props;
 
   if (width < 30 || height < 20) return null;
+
+  const fill = CHART_COLORS[index % CHART_COLORS.length];
 
   return (
     <g>
@@ -27,10 +20,10 @@ function CustomizedPayrollTreemapContent(props: any) {
         y={y}
         width={width}
         height={height}
-        fill={patterns[index % patterns.length]}
-        stroke="var(--border)"
-        strokeWidth={1.5}
-        rx={3}
+        fill={fill}
+        stroke="var(--card)"
+        strokeWidth={2}
+        rx={4}
       />
       {width > 60 && height > 35 && (
         <>
@@ -38,7 +31,7 @@ function CustomizedPayrollTreemapContent(props: any) {
             x={x + width / 2}
             y={y + height / 2 - 2}
             textAnchor="middle"
-            fill="var(--foreground)"
+            fill="var(--background)"
             fontSize={11}
             fontWeight={600}
             className="select-none"
@@ -49,7 +42,8 @@ function CustomizedPayrollTreemapContent(props: any) {
             x={x + width / 2}
             y={y + height / 2 + 13}
             textAnchor="middle"
-            fill="var(--muted-foreground)"
+            fill="var(--background)"
+            fillOpacity={0.8}
             fontSize={10}
             className="select-none"
           >

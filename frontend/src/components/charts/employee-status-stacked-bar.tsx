@@ -12,7 +12,6 @@ import {
   Legend,
 } from 'recharts';
 import { AttendanceByEmployee } from '@/types';
-import { PATTERN_IDS } from './chart-theme';
 
 export function EmployeeStatusStackedBar({
   data,
@@ -60,6 +59,7 @@ export function EmployeeStatusStackedBar({
         <Legend
           verticalAlign="bottom"
           height={32}
+          iconType="circle"
           formatter={(val: string) => (
             <span style={{ color: 'var(--foreground)', fontSize: '11px', textTransform: 'capitalize' }}>
               {val}
@@ -70,24 +70,18 @@ export function EmployeeStatusStackedBar({
           dataKey="present"
           stackId="a"
           fill="var(--chart-1)"
-          stroke="var(--chart-1)"
-          strokeWidth={1}
           animationDuration={800}
         />
         <Bar
           dataKey="leave"
           stackId="a"
-          fill={`url(#${PATTERN_IDS.diagonalHatch})`}
-          stroke="var(--chart-3)"
-          strokeWidth={1}
+          fill="var(--chart-4)"
           animationDuration={800}
         />
         <Bar
           dataKey="absent"
           stackId="a"
-          fill="var(--chart-5)"
-          stroke="var(--chart-4)"
-          strokeWidth={1}
+          fill="var(--chart-6)"
           radius={[0, 4, 4, 0]}
           animationDuration={800}
         />

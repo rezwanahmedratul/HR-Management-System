@@ -11,7 +11,6 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import { HeadcountByDepartment } from '@/types';
-import { PATTERN_IDS } from './chart-theme';
 
 export function HeadcountHorizontalBar({
   data,
@@ -57,9 +56,7 @@ export function HeadcountHorizontalBar({
         />
         <Bar
           dataKey="headcount"
-          fill={`url(#${PATTERN_IDS.diagonalHatch})`}
-          stroke="var(--chart-1)"
-          strokeWidth={1}
+          fill="var(--chart-1)"
           radius={[0, 4, 4, 0]}
           animationDuration={800}
         />

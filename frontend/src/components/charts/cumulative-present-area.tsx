@@ -11,7 +11,6 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import { DailyTrend } from '@/types';
-import { PATTERN_IDS } from './chart-theme';
 
 export function CumulativePresentArea({ data }: { data: DailyTrend[] }) {
   if (!data || data.length === 0) return null;
@@ -62,7 +61,8 @@ export function CumulativePresentArea({ data }: { data: DailyTrend[] }) {
           dataKey="cumulativePresent"
           stroke="var(--foreground)"
           strokeWidth={2}
-          fill={`url(#${PATTERN_IDS.diagonalHatch})`}
+          fill="var(--chart-2)"
+          fillOpacity={0.35}
           animationDuration={800}
         />
       </AreaChart>

@@ -13,7 +13,6 @@ import {
   Legend,
 } from 'recharts';
 import { DepartmentScorecard } from '@/types';
-import { PATTERN_IDS } from './chart-theme';
 import { formatCurrency } from '@/lib/utils';
 
 export function SalaryVsAttendanceComposed({
@@ -72,6 +71,7 @@ export function SalaryVsAttendanceComposed({
         <Legend
           verticalAlign="bottom"
           height={32}
+          iconType="circle"
           formatter={(val: string) => (
             <span style={{ color: 'var(--foreground)', fontSize: '11px' }}>
               {val === 'avgSalary' ? 'Avg Salary' : 'Attendance Rate'}
@@ -81,9 +81,7 @@ export function SalaryVsAttendanceComposed({
         <Bar
           yAxisId="left"
           dataKey="avgSalary"
-          fill={`url(#${PATTERN_IDS.diagonalHatch})`}
-          stroke="var(--chart-2)"
-          strokeWidth={1}
+          fill="var(--chart-2)"
           radius={[4, 4, 0, 0]}
           animationDuration={800}
         />

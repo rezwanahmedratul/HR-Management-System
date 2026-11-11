@@ -12,7 +12,6 @@ import {
   Legend,
 } from 'recharts';
 import { DailyTrend } from '@/types';
-import { PATTERN_IDS } from './chart-theme';
 
 export function DailyTrendStackedArea({ data }: { data: DailyTrend[] }) {
   if (!data || data.length === 0) return null;
@@ -51,6 +50,7 @@ export function DailyTrendStackedArea({ data }: { data: DailyTrend[] }) {
         <Legend
           verticalAlign="bottom"
           height={32}
+          iconType="circle"
           formatter={(val: string) => (
             <span style={{ color: 'var(--foreground)', fontSize: '11px', textTransform: 'capitalize' }}>
               {val}
@@ -62,7 +62,8 @@ export function DailyTrendStackedArea({ data }: { data: DailyTrend[] }) {
           dataKey="present"
           stackId="1"
           stroke="var(--chart-1)"
-          fill={`url(#${PATTERN_IDS.diagonalHatch})`}
+          fill="var(--chart-1)"
+          fillOpacity={0.8}
           animationDuration={800}
         />
         <Area
@@ -70,15 +71,17 @@ export function DailyTrendStackedArea({ data }: { data: DailyTrend[] }) {
           dataKey="leave"
           stackId="1"
           stroke="var(--chart-3)"
-          fill={`url(#${PATTERN_IDS.dots})`}
+          fill="var(--chart-3)"
+          fillOpacity={0.7}
           animationDuration={800}
         />
         <Area
           type="monotone"
           dataKey="absent"
           stackId="1"
-          stroke="var(--chart-4)"
-          fill="var(--chart-6)"
+          stroke="var(--chart-5)"
+          fill="var(--chart-5)"
+          fillOpacity={0.6}
           animationDuration={800}
         />
       </AreaChart>

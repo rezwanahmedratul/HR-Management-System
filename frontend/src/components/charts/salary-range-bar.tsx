@@ -12,7 +12,6 @@ import {
   Legend,
 } from 'recharts';
 import { SalaryRangeByDepartment } from '@/types';
-import { PATTERN_IDS } from './chart-theme';
 import { formatCurrency } from '@/lib/utils';
 
 export function SalaryRangeBar({
@@ -60,6 +59,7 @@ export function SalaryRangeBar({
         <Legend
           verticalAlign="bottom"
           height={32}
+          iconType="circle"
           formatter={(val: string) => (
             <span style={{ color: 'var(--foreground)', fontSize: '11px' }}>
               {val === 'minSalary' ? 'Min' : val === 'avgSalary' ? 'Avg' : 'Max'}
@@ -68,25 +68,19 @@ export function SalaryRangeBar({
         />
         <Bar
           dataKey="minSalary"
-          fill="var(--chart-5)"
-          stroke="var(--chart-3)"
-          strokeWidth={1}
+          fill="var(--chart-6)"
           radius={[3, 3, 0, 0]}
           animationDuration={800}
         />
         <Bar
           dataKey="avgSalary"
-          fill={`url(#${PATTERN_IDS.diagonalHatch})`}
-          stroke="var(--chart-2)"
-          strokeWidth={1}
+          fill="var(--chart-3)"
           radius={[3, 3, 0, 0]}
           animationDuration={800}
         />
         <Bar
           dataKey="maxSalary"
           fill="var(--chart-1)"
-          stroke="var(--chart-1)"
-          strokeWidth={1}
           radius={[3, 3, 0, 0]}
           animationDuration={800}
         />

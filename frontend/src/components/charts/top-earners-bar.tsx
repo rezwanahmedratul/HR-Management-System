@@ -11,7 +11,6 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import { TopEarner } from '@/types';
-import { PATTERN_IDS } from './chart-theme';
 import { formatCurrency } from '@/lib/utils';
 
 export function TopEarnersBar({ data }: { data: TopEarner[] }) {
@@ -55,9 +54,7 @@ export function TopEarnersBar({ data }: { data: TopEarner[] }) {
         />
         <Bar
           dataKey="totalCompensation"
-          fill={`url(#${PATTERN_IDS.horizontalStripes})`}
-          stroke="var(--chart-1)"
-          strokeWidth={1}
+          fill="var(--chart-1)"
           radius={[0, 4, 4, 0]}
           animationDuration={800}
         />

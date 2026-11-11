@@ -2,7 +2,6 @@
 
 import * as React from 'react';
 import { AttendanceHeatmapItem } from '@/types';
-import { PATTERN_IDS } from '../chart-theme';
 
 export interface HeatmapChartProps {
   data: AttendanceHeatmapItem[];
@@ -108,11 +107,9 @@ export function HeatmapChart({ data }: HeatmapChartProps) {
                 if (status === 'Present') {
                   fill = 'var(--chart-1)';
                 } else if (status === 'Leave') {
-                  fill = `url(#${PATTERN_IDS.diagonalHatch})`;
-                  stroke = 'var(--chart-2)';
+                  fill = 'var(--chart-4)';
                 } else if (status === 'Absent') {
-                  fill = 'var(--background)';
-                  stroke = 'var(--chart-2)';
+                  fill = 'var(--chart-6)';
                 }
 
                 return (
@@ -166,14 +163,11 @@ export function HeatmapChart({ data }: HeatmapChartProps) {
           <span>Present</span>
         </div>
         <div className="flex items-center gap-1.5">
-          <span
-            className="w-3 h-3 rounded-xs border border-[var(--chart-2)]"
-            style={{ backgroundImage: 'repeating-linear-gradient(45deg, var(--chart-2), var(--chart-2) 2px, transparent 2px, transparent 4px)' }}
-          />
+          <span className="w-3 h-3 rounded-xs bg-[var(--chart-4)]" />
           <span>Leave</span>
         </div>
         <div className="flex items-center gap-1.5">
-          <span className="w-3 h-3 rounded-xs border border-[var(--chart-2)] bg-[var(--background)]" />
+          <span className="w-3 h-3 rounded-xs bg-[var(--chart-6)]" />
           <span>Absent</span>
         </div>
       </div>

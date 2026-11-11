@@ -11,7 +11,6 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import { SalaryDistribution } from '@/types';
-import { PATTERN_IDS } from './chart-theme';
 
 export function SalaryDistributionHistogram({
   data,
@@ -53,9 +52,7 @@ export function SalaryDistributionHistogram({
         />
         <Bar
           dataKey="count"
-          fill={`url(#${PATTERN_IDS.crossHatch})`}
-          stroke="var(--chart-1)"
-          strokeWidth={1}
+          fill="var(--chart-1)"
           radius={[4, 4, 0, 0]}
           animationDuration={800}
         />

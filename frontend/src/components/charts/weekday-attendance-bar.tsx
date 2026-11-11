@@ -12,7 +12,6 @@ import {
   Legend,
 } from 'recharts';
 import { AttendanceByWeekday } from '@/types';
-import { PATTERN_IDS } from './chart-theme';
 
 export function WeekdayAttendanceBar({
   data,
@@ -54,6 +53,7 @@ export function WeekdayAttendanceBar({
         <Legend
           verticalAlign="bottom"
           height={32}
+          iconType="circle"
           formatter={(val: string) => (
             <span style={{ color: 'var(--foreground)', fontSize: '11px', textTransform: 'capitalize' }}>
               {val}
@@ -63,24 +63,18 @@ export function WeekdayAttendanceBar({
         <Bar
           dataKey="present"
           fill="var(--chart-1)"
-          stroke="var(--chart-1)"
-          strokeWidth={1}
           radius={[3, 3, 0, 0]}
           animationDuration={800}
         />
         <Bar
           dataKey="leave"
-          fill={`url(#${PATTERN_IDS.diagonalHatch})`}
-          stroke="var(--chart-3)"
-          strokeWidth={1}
+          fill="var(--chart-4)"
           radius={[3, 3, 0, 0]}
           animationDuration={800}
         />
         <Bar
           dataKey="absent"
-          fill="var(--chart-5)"
-          stroke="var(--chart-4)"
-          strokeWidth={1}
+          fill="var(--chart-6)"
           radius={[3, 3, 0, 0]}
           animationDuration={800}
         />

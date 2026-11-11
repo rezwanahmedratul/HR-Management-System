@@ -11,7 +11,6 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import { AttendanceByEmployee } from '@/types';
-import { PATTERN_IDS } from './chart-theme';
 
 export function AbsenceRankingBar({
   data,
@@ -61,9 +60,7 @@ export function AbsenceRankingBar({
         />
         <Bar
           dataKey="absent"
-          fill={`url(#${PATTERN_IDS.crossHatch})`}
-          stroke="var(--chart-1)"
-          strokeWidth={1}
+          fill="var(--chart-1)"
           radius={[0, 4, 4, 0]}
           animationDuration={800}
         />

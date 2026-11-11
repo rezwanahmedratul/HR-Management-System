@@ -10,19 +10,10 @@ import {
   Legend,
 } from 'recharts';
 import { HeadcountByDepartment } from '@/types';
-import { PATTERN_IDS } from './chart-theme';
+import { CHART_COLORS } from './chart-theme';
 
 export function HeadcountPie({ data }: { data: HeadcountByDepartment[] }) {
   if (!data || data.length === 0) return null;
-
-  const patterns = [
-    `url(#${PATTERN_IDS.diagonalHatch})`,
-    `url(#${PATTERN_IDS.dots})`,
-    `url(#${PATTERN_IDS.horizontalStripes})`,
-    `url(#${PATTERN_IDS.crossHatch})`,
-    `url(#${PATTERN_IDS.verticalStripes})`,
-    `url(#${PATTERN_IDS.denseDots})`,
-  ];
 
   return (
     <ResponsiveContainer width="100%" height={260}>
@@ -34,15 +25,14 @@ export function HeadcountPie({ data }: { data: HeadcountByDepartment[] }) {
           cx="50%"
           cy="50%"
           outerRadius={80}
-          stroke="var(--border)"
-          strokeWidth={1}
+          stroke="var(--card)"
+          strokeWidth={2}
           animationDuration={800}
         >
           {data.map((_, index) => (
             <Cell
               key={`cell-${index}`}
-              fill={patterns[index % patterns.length]}
-              stroke="var(--chart-2)"
+              fill={CHART_COLORS[index % CHART_COLORS.length]}
             />
           ))}
         </Pie>
@@ -59,6 +49,7 @@ export function HeadcountPie({ data }: { data: HeadcountByDepartment[] }) {
         <Legend
           verticalAlign="bottom"
           height={32}
+          iconType="circle"
           formatter={(val: string) => (
             <span style={{ color: 'var(--foreground)', fontSize: '11px' }}>
               {val}

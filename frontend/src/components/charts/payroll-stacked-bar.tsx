@@ -12,7 +12,6 @@ import {
   Legend,
 } from 'recharts';
 import { PayrollByDepartment } from '@/types';
-import { PATTERN_IDS } from './chart-theme';
 import { formatCurrency } from '@/lib/utils';
 
 export function PayrollStackedBar({ data }: { data: PayrollByDepartment[] }) {
@@ -56,6 +55,7 @@ export function PayrollStackedBar({ data }: { data: PayrollByDepartment[] }) {
         <Legend
           verticalAlign="bottom"
           height={32}
+          iconType="circle"
           formatter={(val: string) => (
             <span style={{ color: 'var(--foreground)', fontSize: '11px' }}>
               {val === 'basicTotal' ? 'Basic Salary' : 'Bonus'}
@@ -65,17 +65,13 @@ export function PayrollStackedBar({ data }: { data: PayrollByDepartment[] }) {
         <Bar
           dataKey="basicTotal"
           stackId="a"
-          fill="var(--chart-2)"
-          stroke="var(--chart-1)"
-          strokeWidth={1}
+          fill="var(--chart-1)"
           animationDuration={800}
         />
         <Bar
           dataKey="bonusTotal"
           stackId="a"
-          fill={`url(#${PATTERN_IDS.dots})`}
-          stroke="var(--chart-3)"
-          strokeWidth={1}
+          fill="var(--chart-4)"
           radius={[4, 4, 0, 0]}
           animationDuration={800}
         />

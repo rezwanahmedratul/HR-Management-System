@@ -12,13 +12,11 @@ import {
   Legend,
 } from 'recharts';
 import { SalaryVsBonus } from '@/types';
-import { PATTERN_IDS } from './chart-theme';
 import { formatCurrency } from '@/lib/utils';
 
 export function BasicVsBonusBar({ data }: { data: SalaryVsBonus[] }) {
   if (!data || data.length === 0) return null;
 
-  // Show first 15 employees for readability
   const subset = data.slice(0, 15);
 
   return (
@@ -60,6 +58,7 @@ export function BasicVsBonusBar({ data }: { data: SalaryVsBonus[] }) {
         <Legend
           verticalAlign="bottom"
           height={32}
+          iconType="circle"
           formatter={(val: string) => (
             <span style={{ color: 'var(--foreground)', fontSize: '11px' }}>
               {val === 'basicSalary' ? 'Basic Salary' : 'Bonus'}
@@ -68,17 +67,13 @@ export function BasicVsBonusBar({ data }: { data: SalaryVsBonus[] }) {
         />
         <Bar
           dataKey="basicSalary"
-          fill="var(--chart-2)"
-          stroke="var(--chart-1)"
-          strokeWidth={1}
+          fill="var(--chart-1)"
           radius={[3, 3, 0, 0]}
           animationDuration={800}
         />
         <Bar
           dataKey="bonus"
-          fill={`url(#${PATTERN_IDS.dots})`}
-          stroke="var(--chart-3)"
-          strokeWidth={1}
+          fill="var(--chart-4)"
           radius={[3, 3, 0, 0]}
           animationDuration={800}
         />

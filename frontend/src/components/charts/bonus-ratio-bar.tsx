@@ -12,7 +12,6 @@ import {
   ReferenceLine,
 } from 'recharts';
 import { BonusRatio } from '@/types';
-import { PATTERN_IDS } from './chart-theme';
 
 export function BonusRatioBar({ data }: { data: BonusRatio[] }) {
   if (!data || data.length === 0) return null;
@@ -62,9 +61,7 @@ export function BonusRatioBar({ data }: { data: BonusRatio[] }) {
         />
         <Bar
           dataKey="bonusRatio"
-          fill={`url(#${PATTERN_IDS.dots})`}
-          stroke="var(--chart-1)"
-          strokeWidth={1}
+          fill="var(--chart-2)"
           radius={[4, 4, 0, 0]}
           animationDuration={800}
         />

@@ -27,6 +27,7 @@ COPY frontend/package.json frontend/bun.lockb* ./
 RUN bun install
 
 COPY frontend/ ./
+RUN mkdir -p /app/frontend/public
 
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV NODE_ENV=production

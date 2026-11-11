@@ -6,6 +6,7 @@ COPY package.json bun.lockb* ./
 RUN bun install
 
 COPY . .
+RUN mkdir -p /app/public
 
 ARG NEXT_PUBLIC_API_URL
 ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL

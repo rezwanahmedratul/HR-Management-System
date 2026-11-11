@@ -12,11 +12,9 @@ import {
   DailyTrend,
   AttendanceByEmployee,
   AttendanceByWeekday,
-  DepartmentScorecard,
 } from '@/types';
 import { ChartCard } from '@/components/charts/chart-card';
 import { HeadcountPie } from '@/components/charts/headcount-pie';
-import { DepartmentScorecardRadar } from '@/components/charts/department-scorecard-radar';
 import { SalaryDistributionHistogram } from '@/components/charts/salary-distribution-histogram';
 import { AverageSalaryByDeptBar } from '@/components/charts/average-salary-by-dept-bar';
 import { AttendanceRateLine } from '@/components/charts/attendance-rate-line';
@@ -38,7 +36,6 @@ export default function AnalyticsPage() {
 
   // Workforce data
   const [headcount, setHeadcount] = React.useState<HeadcountByDepartment[]>([]);
-  const [scorecard, setScorecard] = React.useState<DepartmentScorecard[]>([]);
 
   // Compensation data
   const [payroll, setPayroll] = React.useState<PayrollByDepartment[]>([]);
@@ -61,7 +58,6 @@ export default function AnalyticsPage() {
         setLoading(true);
         const [
           headRes,
-          scoreRes,
           payRes,
           distRes,
           trendRes,
@@ -69,7 +65,6 @@ export default function AnalyticsPage() {
           weekdayRes,
         ] = await Promise.all([
           api.analytics.getHeadcountByDepartment(filters),
-          api.analytics.getDepartmentScorecard(filters),
           api.analytics.getPayrollByDepartment(filters),
           api.analytics.getSalaryDistribution(filters),
           api.analytics.getDailyTrend(filters),
@@ -78,7 +73,6 @@ export default function AnalyticsPage() {
         ]);
 
         setHeadcount(headRes);
-        setScorecard(scoreRes);
         setPayroll(payRes);
         setSalaryDist(distRes);
         setDailyTrend(trendRes);
@@ -175,15 +169,6 @@ export default function AnalyticsPage() {
             ariaLabel="Headcount share by department pie chart"
           >
             <HeadcountPie data={headcount} />
-          </ChartCard>
-
-          <ChartCard
-            title="Department Scorecard"
-            loading={loading}
-            data={scorecard}
-            ariaLabel="Department scorecard radar chart"
-          >
-            <DepartmentScorecardRadar data={scorecard} />
           </ChartCard>
         </div>
       </section>

@@ -1,7 +1,6 @@
 'use client';
 
 import * as React from 'react';
-import { motion } from 'motion/react';
 import { RotateCcw } from 'lucide-react';
 import { api } from '@/lib/api';
 import {
@@ -19,32 +18,22 @@ import {
   AttendanceByEmployee,
   AttendanceByWeekday,
   AttendanceHeatmapItem,
-  AttendanceFlowItem,
   DepartmentScorecard,
 } from '@/types';
 import { ChartCard } from '@/components/charts/chart-card';
 import { HeadcountPie } from '@/components/charts/headcount-pie';
-import { DepartmentTreemap } from '@/components/charts/department-treemap';
 import { DepartmentScorecardRadar } from '@/components/charts/department-scorecard-radar';
 import { SalaryDistributionHistogram } from '@/components/charts/salary-distribution-histogram';
 import { BasicVsBonusBar } from '@/components/charts/basic-vs-bonus-bar';
 import { TopEarnersBar } from '@/components/charts/top-earners-bar';
 import { AverageSalaryByDeptBar } from '@/components/charts/average-salary-by-dept-bar';
 import { SalaryRangeBar } from '@/components/charts/salary-range-bar';
-import { PayrollShareDonut } from '@/components/charts/payroll-share-donut';
-import { SalaryVsBonusScatter } from '@/components/charts/salary-vs-bonus-scatter';
 import { BonusRatioBar } from '@/components/charts/bonus-ratio-bar';
-import { PayrollTreemap } from '@/components/charts/payroll-treemap';
-import { SalaryVsAttendanceComposed } from '@/components/charts/salary-vs-attendance-composed';
 import { AttendanceRateLine } from '@/components/charts/attendance-rate-line';
-import { CumulativePresentArea } from '@/components/charts/cumulative-present-area';
 import { WeekdayAttendanceBar } from '@/components/charts/weekday-attendance-bar';
 import { DepartmentRadialBar } from '@/components/charts/department-radial-bar';
 import { EmployeeStatusStackedBar } from '@/components/charts/employee-status-stacked-bar';
 import { HeatmapChart } from '@/components/charts/custom-svg/heatmap-chart';
-import { SankeyChart } from '@/components/charts/custom-svg/sankey-chart';
-import { AbsenceRankingBar } from '@/components/charts/absence-ranking-bar';
-import { LeaveVsAbsentBar } from '@/components/charts/leave-vs-absent-bar';
 import { Select } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -77,7 +66,6 @@ export default function AnalyticsPage() {
   const [attByEmp, setAttByEmp] = React.useState<AttendanceByEmployee[]>([]);
   const [attByWeekday, setAttByWeekday] = React.useState<AttendanceByWeekday[]>([]);
   const [heatmap, setHeatmap] = React.useState<AttendanceHeatmapItem[]>([]);
-  const [flow, setFlow] = React.useState<AttendanceFlowItem[]>([]);
 
   // Load departments once
   React.useEffect(() => {
@@ -103,7 +91,6 @@ export default function AnalyticsPage() {
           empAttRes,
           weekdayRes,
           heatRes,
-          flowRes,
         ] = await Promise.all([
           api.analytics.getHeadcountByDepartment(filters),
           api.analytics.getDepartmentScorecard(filters),
@@ -118,7 +105,6 @@ export default function AnalyticsPage() {
           api.analytics.getByEmployee(filters),
           api.analytics.getByWeekday(filters),
           api.analytics.getHeatmap(filters),
-          api.analytics.getFlow(filters),
         ]);
 
         setHeadcount(headRes);
@@ -134,7 +120,6 @@ export default function AnalyticsPage() {
         setAttByEmp(empAttRes);
         setAttByWeekday(weekdayRes);
         setHeatmap(heatRes);
-        setFlow(flowRes);
       } catch (err) {
         console.error('Failed to load analytics data:', err);
       } finally {
@@ -218,7 +203,7 @@ export default function AnalyticsPage() {
         <h2 className="text-sm font-semibold tracking-wider text-[var(--muted-foreground)] uppercase">
           Workforce
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <ChartCard
             title="Headcount Share"
             loading={loading}
@@ -226,15 +211,6 @@ export default function AnalyticsPage() {
             ariaLabel="Headcount share by department pie chart"
           >
             <HeadcountPie data={headcount} />
-          </ChartCard>
-
-          <ChartCard
-            title="Department Size"
-            loading={loading}
-            data={headcount}
-            ariaLabel="Department size treemap"
-          >
-            <DepartmentTreemap data={headcount} />
           </ChartCard>
 
           <ChartCard
@@ -300,49 +276,12 @@ export default function AnalyticsPage() {
           </ChartCard>
 
           <ChartCard
-            title="Payroll Share"
-            loading={loading}
-            data={payroll}
-            ariaLabel="Payroll share by department donut"
-          >
-            <PayrollShareDonut data={payroll} />
-          </ChartCard>
-
-          <ChartCard
-            title="Salary vs Bonus"
-            loading={loading}
-            data={salaryVsBonus}
-            ariaLabel="Salary vs bonus scatter plot"
-          >
-            <SalaryVsBonusScatter data={salaryVsBonus} />
-          </ChartCard>
-
-          <ChartCard
             title="Bonus Ratio"
             loading={loading}
             data={bonusRatio}
             ariaLabel="Bonus ratio percentage bar chart"
           >
             <BonusRatioBar data={bonusRatio} />
-          </ChartCard>
-
-          <ChartCard
-            title="Payroll Distribution"
-            loading={loading}
-            data={payroll}
-            ariaLabel="Payroll by department treemap"
-          >
-            <PayrollTreemap data={payroll} />
-          </ChartCard>
-
-          <ChartCard
-            title="Salary vs Attendance"
-            loading={loading}
-            data={scorecard}
-            ariaLabel="Average salary vs attendance rate composed chart"
-            className="md:col-span-2 lg:col-span-3"
-          >
-            <SalaryVsAttendanceComposed data={scorecard} />
           </ChartCard>
         </div>
       </section>
@@ -360,15 +299,6 @@ export default function AnalyticsPage() {
             ariaLabel="Daily present rate line chart"
           >
             <AttendanceRateLine data={dailyTrend} />
-          </ChartCard>
-
-          <ChartCard
-            title="Cumulative Present"
-            loading={loading}
-            data={dailyTrend}
-            ariaLabel="Cumulative present days area chart"
-          >
-            <CumulativePresentArea data={dailyTrend} />
           </ChartCard>
 
           <ChartCard
@@ -394,36 +324,9 @@ export default function AnalyticsPage() {
             loading={loading}
             data={attByEmp}
             ariaLabel="Attendance status per employee stacked bar"
+            className="md:col-span-2 lg:col-span-3"
           >
             <EmployeeStatusStackedBar data={attByEmp} />
-          </ChartCard>
-
-          <ChartCard
-            title="Absence Ranking"
-            loading={loading}
-            data={attByEmp}
-            ariaLabel="Absence ranking bar chart"
-          >
-            <AbsenceRankingBar data={attByEmp} />
-          </ChartCard>
-
-          <ChartCard
-            title="Leave vs Absent"
-            loading={loading}
-            data={attByDept}
-            ariaLabel="Leave vs absent comparison by department"
-          >
-            <LeaveVsAbsentBar data={attByDept} />
-          </ChartCard>
-
-          <ChartCard
-            title="Status Flow"
-            loading={loading}
-            data={flow}
-            ariaLabel="Department to status flow Sankey diagram"
-            className="md:col-span-2"
-          >
-            <SankeyChart data={flow} />
           </ChartCard>
 
           <ChartCard
